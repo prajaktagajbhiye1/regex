@@ -1,0 +1,155 @@
+/*
+ * To change this license header, choose License Headers in Project Properties.
+ * To change this template file, choose Tools | Templates
+ * and open the template in the editor.
+ */
+package javafxapplication5;
+
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
+/**
+ *
+ * @author raghuveer
+ */
+public class regex1 {
+
+    public static void main(String[] args) {
+
+        Pattern p = Pattern.compile(".p");
+        Matcher m = p.matcher("as");
+
+        boolean b = m.matches();
+        boolean b2 = Pattern.compile(".s").matcher("as").matches();
+        boolean b3 = Pattern.matches("q", "qm");
+
+//        Regex Quantifiers
+//The quantifiers specify the number of occurrences of a character.
+//
+//Regex	Description
+//X?	X occurs once or not at all
+//X+	X occurs once or more times
+//X*	X occurs zero or more times
+//X{n}	X occurs n times only
+//X{n,}	X occurs n or more times
+//X{y,z}	X occurs at least y times but less than z times
+//        
+        System.out.println("1 " + b + "\n" + b2 + "\n" + b3);//false//true //false: koi ek alpha hona chaheya
+        System.out.println("2 " + Pattern.matches(".s", "as"));//true  koi ek alpha hona chaheya
+        System.out.println("3 " + Pattern.matches(".s", "mk"));//false  ---------''---------
+        System.out.println("4 " + Pattern.matches(".s", "mst"));//false koi ek alpha hana chaheye but uskay alawa loi aur nhi hona chaheya m and t extra hai jo ke input may nhi hai
+        System.out.println("5 " + Pattern.matches(".s", "amms"));//false --------''--------
+        System.out.println("6 " + Pattern.matches("..s", "mas"));//true   bez ..s means 's' kay sath koi aur aya toh chalta 
+
+        System.out.println("7 " + Pattern.matches("[amn]", "abcd"));// false [] means koi ek apha aya toh chalta but output or searching string may koi other alpha nhi ana chaheya yaha bcd extra hai
+        System.out.println("8 " + Pattern.matches("[amn]", "a"));//true bez 'a' input string may bhi hai and output string may bhe hai
+        System.out.println("9 " + Pattern.matches("[amn]", "amnh"));//false bez 'h' extra hai searching string may
+        System.out.println("10 " + Pattern.matches("[amn]", "amn"));//some times true when it reset some times false ??????  i dont know??? but logical its true
+        System.out.println("11 " + Pattern.matches("[amn]", "ammmna"));//false bez 'a' or 'm' or 'n' ek he bar ana chaheya but m more than ones
+
+        System.out.println("7.1 " + Pattern.matches("[^amn]", "p"));//true bez '^' means any apha except input string
+        System.out.println("7.2 " + Pattern.matches("[^amn]", "pqe"));//false ----"----  but only one char 2 are extra 
+        System.out.println("7.3 " + Pattern.matches("[^amn]", "ppp"));//false  ---"----
+
+        //X?	X occurs once or not at all
+        System.out.println("12 " + Pattern.matches("[amn]?", "a"));// true 'a' or 'm' or 'n' teno maysay koi ek ,ek he bar ana chaheya
+        System.out.println("13 " + Pattern.matches("[amn]?", "aaa"));// false -------"------
+        System.out.println("14 " + Pattern.matches("[amn]?", "aammmnn"));//false -----"------
+        System.out.println("15 " + Pattern.matches("[amn]?", "aazzta"));//false ------"------- 
+        System.out.println("16 " + Pattern.matches("[amn]?", "am"));//dont know ans bez logical teno may say koi ek , ek bar ana chaheya but it gave me false ,,logical answer is true
+        System.out.println("17 " + Pattern.matches("[amn]?", "amn"));//-------------"-------------
+        System.out.println("18 " + Pattern.matches("[amn]?", "amnxyz"));//false bez xyz extra hai search string may
+
+        //X+	X occurs once or more times
+        System.out.println("19 " + Pattern.matches("[amn]+", "a"));//true bez 'a' or 'm'or 'n' ek ya ek say jada bar aya toh chalta
+        System.out.println("20 " + Pattern.matches("[amn]+", "aaa"));// true ---------''-----------
+        System.out.println("21 " + Pattern.matches("[amn]+", "aaammmnn"));//true ---------------"-----------
+        System.out.println("22 " + Pattern.matches("[amn]+", "aazzta"));// false bez searching string may zt extra word ayay hai
+        System.out.println("23 " + Pattern.matches("[amn]+", "amn"));//true bez 'a' or 'm' or 'n' ek ya ek say jada bar aya toh chalta
+
+        System.out.println("24 " + Pattern.matches("[amn]*", "ammmna"));//true 'a' or 'm' or 'n' teno maysay koi ek ek ya zero bar aya fir bhi chalta but input string maysay koi ek ana he chaheya
+        System.out.println("25 " + Pattern.matches("[amn]*", "pqr"));//false koi ek alpha bhi nhi present output string may
+        System.out.println("26 " + Pattern.matches("[amn]*", "apqr"));//false pqr extra hai
+        System.out.println("27 " + Pattern.matches("[amn]*", "aaamm"));//true bez 'a' and 'm' searching string may present hai
+
+//        Regex	Description
+//     .	Any character (may or may not match terminator)
+//    \d	Any digits, short of [0-9]
+//    \D	Any non-digit, short for [^0-9]
+//    \s	Any whitespace character, short for [\t\n\x0B\f\r]
+//    \S	Any non-whitespace character, short for [^\s]
+//    \w	Any word character, short for [a-zA-Z_0-9]
+//    \W	Any non-word character, short for [^\w]
+//    \b	A word boundary
+//    \B	A non word boundary
+        System.out.println("28 " + Pattern.matches("\\d", "abc"));// false koi number nhi present 
+        System.out.println("29 " + Pattern.matches("\\d", "1"));//true bacause 1 number present hai
+        System.out.println("30 " + Pattern.matches("\\d", "1234567890"));//dont know answer bez all digit are present logicaly its gives true ans but it gave false
+        System.out.println("31 " + Pattern.matches("\\d", "1122"));//false because '1' and '2'  are comes more than one's
+        System.out.println("32 " + Pattern.matches("\\d", "11222abc"));//false -----"---- ans also ther are char or alpha are present
+
+        System.out.println("33 " + Pattern.matches("\\D", "1"));//false bez D means non digit number
+        System.out.println("34 " + Pattern.matches("\\D", "11144"));// false -----"-----
+        System.out.println("35 " + Pattern.matches("\\D", "a"));//true bez non digit number are present
+        System.out.println("36 " + Pattern.matches("\\D", "ab"));//false bez ek he nondigit hona
+        System.out.println("37 " + Pattern.matches("\\D", "aabb"));//false -----"--------
+        System.out.println("38 " + Pattern.matches("\\D", "123abc"));// false bez digit are present
+        System.out.println("39 " + Pattern.matches("\\D", "*"));//true bez we have only non digit number
+        System.out.println("40 " + Pattern.matches("\\D", "&*"));// false bez not digit ek he hona either '*' or either '&'
+        System.out.println("41 " + Pattern.matches("\\D", " "));//true bez "space" is non digit
+
+        System.out.println("42 " + Pattern.matches("[\\D]", "m"));//true bez ek he non digit hoan and ek he bar
+        System.out.println("43 " + Pattern.matches("[\\D]", "mm"));//false bez ----------"------- 
+        System.out.println("44 " + Pattern.matches("[\\D]", "mak"));//false bez ----------"------- two non digit are extra
+
+        System.out.println("45 " + Pattern.matches("[\\D]?", "m"));//true bez non digit ek.. he.. ek  bar ana chaheya 
+        System.out.println("46 " + Pattern.matches("[\\D]?", "mm"));//true bez ---"--------------
+        System.out.println("47 " + Pattern.matches("[\\D]?", "mak"));//true bez --------"------
+
+        System.out.println("48 " + Pattern.matches("[\\D]+", "m"));//true bez  non digit ek ya ek say jada bar aya toh chalta
+        System.out.println("49 " + Pattern.matches("[\\D]+", "mmm"));//true bez    -----"-----
+        System.out.println("50 " + Pattern.matches("[\\D]+", "mak"));//true bez 
+        System.out.println("51 " + Pattern.matches("[\\D]+", "1mak"));//false bez digit aa gaya kerkay
+
+        System.out.println("52 " + Pattern.matches("[\\D]*", "m"));//true bez  non digit zero ya more than zero jada bar aya toh chalta
+        System.out.println("53 " + Pattern.matches("[\\D]*", "mmm"));//true bez    -----"-----
+        System.out.println("54 " + Pattern.matches("[\\D]*", "mak"));//true bez 
+        System.out.println("55 " + Pattern.matches("[\\D]*", "1mak"));//false bez digit aa gaya kerkay
+
+        //Regular Expression
+        System.out.println("56 " + Pattern.matches("[a-zA-Z]", "a"));//true bez small alpha or captial alpha hona
+        System.out.println("57 " + Pattern.matches("[a-zA-Z]", "aa"));//false ek alpha ek he bar hona
+        System.out.println("58 " + Pattern.matches("[a-zA-Z]", "A"));//true bez small alpha ya capital alpha ek he bar hona
+        System.out.println("59 " + Pattern.matches("[a-zA-Z]", "AA"));//false  ----"-----
+        System.out.println("60 " + Pattern.matches("[a-zA-Z]", "aA"));//false ---"------
+        System.out.println("61 " + Pattern.matches("[a-zA-Z]", "Aa"));// false-----"--------
+
+        //   X{n}	X occurs n times only
+        System.out.println("62 " + Pattern.matches("[a-zA-Z0-9]{6}", "abAB01"));//true bez a to z or A to Z or 0 to 9   "6 digit string are come"
+        System.out.println("63 " + Pattern.matches("[a-zA-Z0-9]{6}", "aaaaaa"));// true ------------"----------
+        System.out.println("64 " + Pattern.matches("[a-zA-Z0-9]{6}", "AAAAAA"));//true ------------"-------
+        System.out.println("65 " + Pattern.matches("[a-zA-Z0-9]{6}", "111111"));//true ------"-------
+        System.out.println("66 " + Pattern.matches("[a-zA-Z0-9]{6}", "abAa01"));//true -------"--------
+        System.out.println("67 " + Pattern.matches("[a-zA-Z0-9]{6}", "      "));//false bez space r not a alpha or digit
+        System.out.println("68 " + Pattern.matches("[a-zA-Z0-9]{6}", "abAB011"));//false bez  more then 6 char
+        System.out.println("69 " + Pattern.matches("[a-zA-Z0-9]{6}", "abAB0&"));//false bez $ are include we havea to z or A to Z or 0 to 9   "6 digit string are come" 
+
+        System.out.println("70 " + Pattern.matches("[123]{1}[0-9]{9}", "1234567890"));//true {1} means (1,2,3 may say koi ek ,,ek he bar ana chaheya)+{9}={10} digit hona he chaheya.[123] means teno may koi ek digit hona he chaheya {1} wo bhe starting may
+        System.out.println("71 " + Pattern.matches("[123]{1}[0-9]{9}", "4444567890"));//false ---------------"--------- 
+        System.out.println("72 " + Pattern.matches("[123]{1}[0-9]{9}", "3994567890"));//true    -----------"-----------
+        System.out.println("72.2 " + Pattern.matches("[123][0-9]{9}", "1244567890"));//true ---"----------
+
+        System.out.println("73 " + Pattern.matches("[123][0-9]{9}", "1123456789"));//true [123] may say koi ek hona he chaheya + uskay sathn{9} digit
+        System.out.println("74 " + Pattern.matches("[123][0-9]{9}", "4444567890"));//false ------"------
+        System.out.println("75 " + Pattern.matches("[123][0-9]{9}", "3456789111"));//true  ----------"-------
+
+        System.out.println("76 " + Pattern.matches("[123][0-9]{9}", "12345678901"));// false digit are 11
+        System.out.println("77 " + Pattern.matches("[567][0-9]{9}", "1234567890"));//false string start from 1 either then 567
+        System.out.println("78 " + Pattern.matches("[1][0-9]{9}", "1234567890"));//true digit are 9and [1](count) are 10  and also the using[1] string start withone
+        System.out.println("79 " + Pattern.matches("[3]{1}\\d{9}", "3456789010"));//true [3] means start with digit 3 and after then 9 dighit are present
+        System.out.println("80 " + Pattern.matches("[123]\\d{9}", "4444567890"));//false bez not start with 1 or 2 or 3
+        System.out.println("81 " + Pattern.matches("[123]\\d{9}", "2544567890"));//true because string start with 1 or 2 or  3 and after then 9 digit are present
+
+    }
+
+}
